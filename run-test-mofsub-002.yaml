@@ -1,0 +1,122 @@
+# regular max like fitting, but with mof subtraction
+# - subtracting neighbors
+# - throw out any images with bad pixels or zero weight pixels
+# - admom
+
+run: "test-mofsub-002"
+
+global_seed: 4158
+
+# setup for neighbors
+nbrs:
+    buff_type: 'tot'
+    buff_frac: 0.25
+    maxsize_to_replace: 256
+    new_maxsize: 384
+    check_seg: True
+
+
+# job setup
+jobs:
+    # for MOF this refers to the number of FOFs in a chunk,
+    # otherwise it is the number of objects
+    chunksize: 500
+
+    # what to do
+    bands: ['r','i','z']
+
+collate:
+    # how to combine results
+    concat_type: 'concat-metacal-admom-des'
+
+# for now do regular fitting
+fitter_type: "metacal-admom-boot"
+imageio_type: "meds-des-y3"
+
+fit_me_galaxy: True
+fit_coadd_galaxy: False
+
+read_wcs: False
+read_me_wcs: False
+
+# turning off for metacal, since it currently
+# requires all stamps same size
+prop_sat_starpix: False
+flag_y1_stellarhalo_masked: False
+intr_prof_var_fac: 0.0
+
+# we will not replace bad pixels, rather
+# just reject any images with bad pixels or zero weight pixels
+# we will mark outliers in the weight, so they can
+# be removed
+#   make sure these are set below
+#      max_bmask_frac: 0.0
+#      max_zero_weight_frac: 0.0
+
+correct_meds:
+    mof_run: "test-mof-002"
+    replace_bad:     False
+    reject_outliers: True
+
+# note this should not be set explicitly to false for mof runs
+guess_from_nbrs: False
+
+
+# do *not* do this in the main code, but in the neighbor
+# code
+reject_outliers: False
+
+
+# don't bother with any images that have bad pixels or zero weight
+# pixels
+max_bmask_frac: 0.0
+max_zero_weight_frac: 0.0
+
+# don't need this since we are rejecting anything witha bad pixel
+replace_bad_pixels: False
+
+# no need for this, since we don't allow any bits set in mask
+symmetrize_bmask: False
+
+# don't need this since we are rejecting anything with zero weight
+symmetrize_weight: False
+
+# skip when either all weight or all image are zero
+ignore_zero_weights_images: True
+
+
+# skip if central region is masked
+# this is a 4 pixel offset in each direction
+# no need since we toss images with bad pixels
+#central_bmask_radius: 4
+
+#max_box_size: 48
+
+# subtracting neighbors, so use regular weight
+region: "weight"
+
+# flagging. Don't really need this any more
+image_flags2check: 655343
+
+use_psf_rerun: False
+normalize_psf: False
+center_psf: False
+
+print_params: True
+
+# checkpoint times in minutes, needed for condor in case we pass a batch system
+# limit such as in the condor scavenge.
+# 0 means after the first object
+
+# checkpoints for lsf
+checkpoints: [0,5,10,15,20,25,
+              30,60,
+              90,120, 
+              150,180,
+              210,240,
+              270,300,
+              330,360,
+              390,420,
+              480,540,
+              600,700,
+              800,900,1000,1200,1400,1600,1800,2000]
