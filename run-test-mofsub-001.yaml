@@ -56,10 +56,10 @@ intr_prof_var_fac: 0.0
 #      max_bmask_frac: 0.0
 #      max_zero_weight_frac: 0.0
 
-#correct_meds:
-#    mof_run: "test-mof-002"
-#    replace_bad:     False
-#    reject_outliers: True
+correct_meds:
+    mof_run: "test-mof-002"
+    replace_bad:     False
+    reject_outliers: True
 
 # note this should not be set explicitly to false for mof runs
 guess_from_nbrs: False
