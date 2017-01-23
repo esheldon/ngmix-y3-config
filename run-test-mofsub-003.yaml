@@ -2,8 +2,6 @@
 # regular max like fitting, but with mof subtraction
 # - subtracting neighbors
 # - throw out any images with bad pixels or zero weight pixels
-# TODO
-# - admom
 
 run: "test-mofsub-003"
 mof_run: "test-mof-002"
@@ -31,6 +29,7 @@ jobs:
 collate:
     # how to combine results
     concat_type: 'concat-metacal-des'
+    blinding: "y3"
 
 
 # for now do regular fitting

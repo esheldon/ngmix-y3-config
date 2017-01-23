@@ -28,6 +28,7 @@ jobs:
 collate:
     # how to combine results
     concat_type: 'concat-metacal-admom-des'
+    blinding: "y3"
 
 # for now do regular fitting
 fitter_type: "metacal-admom-boot"

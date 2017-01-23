@@ -30,6 +30,7 @@ jobs:
 collate:
     # how to combine results
     concat_type: 'concat-metacal-des'
+    blinding: "y3"
 
 
 # for now do regular fitting
