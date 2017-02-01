@@ -3,9 +3,9 @@
 # - subtracting neighbors
 # - throw out any images with bad pixels or zero weight pixels
 
-run: "y3-main-001"
+run: "y3a1-main-mcal-001"
 
-global_seed: 7319
+global_seed: 22699
 
 # setup for neighbors
 nbrs:

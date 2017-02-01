@@ -1,7 +1,7 @@
 # fracdev gmix included
-run: "test-mof-002"
+run: "y3a1-main-mof-001"
 
-global_seed: 12384
+global_seed: 30606
 
 # setup for neighbors
 nbrs:
