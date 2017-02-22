@@ -98,7 +98,7 @@ central_bmask_radius: 4
 
 region: "mof"
 
-min_weight: 0.0
+min_weight: 1.0e-4
 
 # flagging
 #replacement_flags: "${DESDATA}/EXTRA/combined-image-flags/sva1_astrom_run1.0.1_stats_flagged_sheldon_psfv3_blacklists.json"

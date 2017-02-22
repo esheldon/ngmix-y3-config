@@ -99,6 +99,8 @@ ignore_zero_weights_images: True
 # subtracting neighbors, so use regular weight
 region: "cweight-nearest"
 
+min_weight: 1.0e-4
+
 # flagging
 #replacement_flags: "${DESDATA}/EXTRA/combined-image-flags/sva1_astrom_run1.0.1_stats_flagged_sheldon_psfv3_blacklists.json"
 
