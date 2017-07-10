@@ -31,8 +31,28 @@ read_me_wcs: False
 
 # turning off for ngmix only, since it currently
 # requires all stamps same size
-prop_sat_starpix: False
+
+propagate_star_flags:
+    # propagate SATURATE, INTERP between
+    # bands and epochs
+    propagate: True
+
+    # don't propagate if these bits are also set for
+    # the same pixel
+    ignore_when_set: [
+        SUSPECT,
+        SSXTALK,
+        EDGEBLEED,
+        CRAY,
+        BADAMP,
+        BPM,
+    ]
+
+
+# if > 0, will add in estimate for intrinsic profile variance 
 flag_y1_stellarhalo_masked: False
+
+# if > 0, will add in estimate for intrinsic profile variance 
 intr_prof_var_fac: 0.0
 
 # note this should not be set explicitly to false for mof runs
@@ -41,6 +61,17 @@ guess_from_nbrs: False
 # do *not* do this in the main code, but in the neighbor
 # code
 reject_outliers: True
+
+# the input images have zero weight when lots of bits are set
+# Setting these will zero out more
+extra_mask_flags: [
+    TAPEBUMP,
+    NEAREDGE,
+    SATURATE,
+    INTERP,
+    #SUSPECT,
+]
+
 
 # don't bother with any images that have bad pixels or zero weight
 # pixels
@@ -107,8 +138,6 @@ max_pars:
     use_fracdev_grid: False
     fracdev_range: [0.0,1.0]
     TdByTe_range: [0.0,1.0e+12]
- 
-min_weight: 1.0e-4
 
 psf_pars:
     model: 'em3'
