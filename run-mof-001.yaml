@@ -64,14 +64,25 @@ propagate_star_flags:
         BPM,
     ]
 
-# flag an object if any of its segmentation map is
-# within a bright star halo STAR
+# throw out postage stamps for which the seg map of the
+# central object intersects a bright star mask
 flag_y1_stellarhalo_masked: True
 
 # if > 0, will add in estimate for intrinsic profile variance 
 intr_prof_var_fac: 0.0
 
 reject_outliers: True
+
+# the input images have zero weight when lots of bits are set
+# Setting these will zero out more
+extra_mask_flag_list: [
+    TAPEBUMP,
+    NEAREDGE,
+    SATURATE,
+    INTERP,
+    #SUSPECT,
+]
+
 
 make_corrected_meds: False
 

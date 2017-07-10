@@ -11,7 +11,7 @@ jobs:
     chunksize: 1000
 
     # what to do
-    bands: ['r','i','z']
+    bands: [g,r,i,z]
 
 collate:
     # how to combine results
@@ -45,7 +45,8 @@ propagate_star_flags:
         BPM,
     ]
 
-# only want this for MOF perhaps?
+# throw out postage stamps for which the seg map of the
+# central object intersects a bright star mask
 flag_y1_stellarhalo_masked: False
 
 # if > 0, will add in estimate for intrinsic profile variance 
@@ -57,6 +58,18 @@ guess_from_nbrs: False
 # do *not* do this in the main code, but in the neighbor
 # code
 reject_outliers: True
+
+# the input images have zero weight when lots of bits are set
+# Setting these will zero out more
+extra_mask_flag_list: [
+    TAPEBUMP,
+    NEAREDGE,
+    SATURATE,
+    INTERP,
+    #SUSPECT,
+]
+
+
 
 # don't bother with any images that have bad pixels or zero weight
 # pixels

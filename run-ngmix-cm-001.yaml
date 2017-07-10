@@ -1,3 +1,5 @@
+# with flag_y1_stellarhalo_masked to False
+
 run: "ngmix-cm-001"
 
 global_seed: 24087
@@ -11,7 +13,7 @@ jobs:
     chunksize: 1000
 
     # what to do
-    bands: ['r','i','z']
+    bands: [g,r,i,z]
 
 collate:
     # how to combine results
@@ -49,7 +51,8 @@ propagate_star_flags:
     ]
 
 
-# if > 0, will add in estimate for intrinsic profile variance 
+# throw out postage stamps for which the seg map of the
+# central object intersects a bright star mask
 flag_y1_stellarhalo_masked: False
 
 # if > 0, will add in estimate for intrinsic profile variance 
@@ -64,7 +67,7 @@ reject_outliers: True
 
 # the input images have zero weight when lots of bits are set
 # Setting these will zero out more
-extra_mask_flags: [
+extra_mask_flag_list: [
     TAPEBUMP,
     NEAREDGE,
     SATURATE,
