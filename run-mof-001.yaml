@@ -6,7 +6,7 @@ global_seed: 27539
 jobs:
     # for MOF this refers to the number of FOFs in a chunk,
     # otherwise it is the number of objects
-    chunksize: 100
+    chunksize: 500
 
     # what to do
     bands: ['g','r','i','z']
