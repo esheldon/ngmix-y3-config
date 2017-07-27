@@ -1,0 +1,190 @@
+run: "ngmix-dev-001"
+
+global_seed: 11018
+
+
+# job setup
+jobs:
+    # for MOF this refers to the number of FOFs in a chunk,
+    # otherwise it is the number of objects
+    #chunksize: 10000
+    chunksize: 5000
+
+    # what to do
+    bands: [g,r,i,z]
+
+collate:
+    # how to combine results
+    concat_type: 'concat-des'
+    blinding: "y3"
+
+
+# for now do regular fitting
+fitter_type: "max-ngmix-boot"
+imageio_type: "meds-des-y3"
+
+fit_me_galaxy: True
+fit_coadd_galaxy: False
+
+read_wcs: False
+read_me_wcs: False
+
+propagate_star_flags:
+    # propagate SATURATE, INTERP between
+    # bands and epochs
+    propagate: True
+
+    # don't propagate if these bits are also set for
+    # the same pixel
+    ignore_when_set: [
+        SUSPECT,
+        SSXTALK,
+        EDGEBLEED,
+        CRAY,
+        BADAMP,
+        BPM,
+    ]
+
+# throw out postage stamps for which the seg map of the
+# central object intersects a bright star mask
+flag_y1_stellarhalo_masked: False
+
+# if > 0, will add in estimate for intrinsic profile variance 
+intr_prof_var_fac: 0.0
+
+# note this should not be set explicitly to false for mof runs
+guess_from_nbrs: False
+
+# do *not* do this in the main code, but in the neighbor
+# code
+reject_outliers: True
+
+# the input images have zero weight when lots of bits are set
+# Setting these will zero out more
+extra_mask_flag_list: [
+    TAPEBUMP,
+    NEAREDGE,
+    SATURATE,
+    INTERP,
+    #SUSPECT,
+]
+
+
+
+# don't bother with any images that have bad pixels or zero weight
+# pixels
+max_bmask_frac: 0.45
+max_zero_weight_frac: 0.45
+
+# don't need this since we are rejecting anything witha bad pixel
+replace_bad_pixels: False
+
+# no need for this, since we don't allow any bits set in mask
+symmetrize_bmask: False
+
+# don't need this since we are rejecting anything with zero weight
+symmetrize_weight: False
+
+# skip when either all weight or all image are zero
+ignore_zero_weights_images: True
+
+
+# skip if central region is masked
+# this is a 4 pixel offset in each direction
+# no need since we toss images with bad pixels
+#central_bmask_radius: 4
+
+#max_box_size: 48
+
+# subtracting neighbors, so use regular weight
+# uberseg
+region: "cweight-nearest"
+
+# flagging
+#replacement_flags: "${DESDATA}/EXTRA/combined-image-flags/sva1_astrom_run1.0.1_stats_flagged_sheldon_psfv3_blacklists.json"
+
+# astrom
+# 2**0 + 2**1 + 2**2 + 2**3 + 2**5 + 2**6 + 2**7 + 2**8 + 2**9
+#  = 1007
+# blacklists
+# 2**(10+0) + 2**(10+1) + 2**(10+2) + 2**(10+3) + 2**(10+4) = (31<<10)
+#  = 31744
+# psf
+# 2**(15+0) + 2**(15+1) + 2**(15+4)
+#  = (19<<15)
+# total
+# 
+# 1007 + (31<<10) + (19<<15)
+#  = 655343
+
+image_flags2check: 655343
+
+use_psf_rerun: False
+normalize_psf: False
+center_psf: False
+
+print_params: True
+
+max_pars:
+    method: 'lm'
+    ntry: 2
+    
+    lm_pars:
+        maxfev: 2000
+        xtol: 5.0e-5
+        ftol: 5.0e-5
+
+psf_pars:
+    model: 'em3'
+    ntry: 20
+    fit_pars:
+      maxiter: 5000
+      tol: 5.0e-6
+
+
+round_pars:
+    fitter_type: 'max'
+
+replace_cov: False
+cov_pars:
+    m: 5
+    h: 1.0e-3
+
+use_logpars: False
+model_pars:
+    dev:
+        g:
+            type: "cosmos-sersic"
+
+        T:
+            type: "TwoSidedErf"
+            pars: [-10.0, 0.03, 1.0e+06, 1.0e+05]
+
+        counts:
+            type: "TwoSidedErf"
+            pars: [-1.0e+04, 1.0, 1.0e+09, 0.25e+08]
+            repeat: True
+
+        cen:
+            type: "dgauss"
+            width: 0.27
+
+do_shear: False
+
+
+# checkpoint times in minutes, needed for condor in case we pass a batch system
+# limit such as in the condor scavenge.
+# 0 means after the first object
+
+# checkpoints for lsf
+checkpoints: [0,5,10,15,20,25,
+              30,60,
+              90,120, 
+              150,180,
+              210,240,
+              270,300,
+              330,360,
+              390,420,
+              480,540,
+              600,700,
+              800,900,1000,1200,1400,1600,1800,2000]
