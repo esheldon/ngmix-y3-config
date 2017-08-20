@@ -1,6 +1,6 @@
-run: "mof-002"
+run: "y3v02-mof-001"
 
-global_seed: 3421
+global_seed: 26385
 
 # job setup
 jobs:

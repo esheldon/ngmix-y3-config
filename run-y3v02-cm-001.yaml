@@ -1,8 +1,8 @@
 # with flag_y1_stellarhalo_masked to False
 
-run: "ngmix-cm-001"
+run: "y3v02-cm-001"
 
-global_seed: 24087
+global_seed: 22350
 
 
 # job setup
