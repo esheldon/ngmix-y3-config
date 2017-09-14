@@ -1,5 +1,5 @@
 # testing with zero weight/bmask limit 0.45
-run: "y3v02-mcal-001"
+run: "y3v02-mcal-t001"
 
 global_seed: 31749
 
