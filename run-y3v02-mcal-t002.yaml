@@ -6,7 +6,7 @@ global_seed: 31749
 
 # job setup
 jobs:
-    chunksize: 1000
+    chunksize: 100
 
     # what to do
     bands: [r,i,z]
