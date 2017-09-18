@@ -5,7 +5,7 @@ global_seed: 31749
 
 # job setup
 jobs:
-    chunksize: 1000
+    chunksize: 500
 
     # what to do
     bands: [r,i,z]
@@ -17,7 +17,7 @@ collate:
 
 
 # for now do regular fitting
-fitter_type: "max-ngmix-boot"
+fitter_type: "metacal-ngmix-boot"
 imageio_type: "meds-des-y3"
 
 fit_me_galaxy: True
@@ -89,6 +89,9 @@ extra_mask_flag_list: [
 
 # don't use epochs that are highly masked
 max_bmask_frac: 0.45
+
+# this is the zeros in the weight map, not including other
+# things like uberseg zeroing of weight pixels
 max_zero_weight_frac: 0.45
 
 # doing this in corrector code
