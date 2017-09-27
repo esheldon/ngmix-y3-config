@@ -6,7 +6,10 @@ global_seed: 26315
 
 # job setup
 jobs:
-    chunksize: 300
+    # bnl chunksize
+    # chunksize: 300
+    # slac chunksize
+    chunksize: 2000
 
     # what to do
     bands: [r,i,z]
