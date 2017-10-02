@@ -1,6 +1,6 @@
-run: "y3v02-mcal-001"
+run: "y3v02a-mcal-001"
 
-global_seed: 1687
+global_seed: 11752
 
 
 # job setup
@@ -34,7 +34,7 @@ read_me_wcs: False
 correct_meds:
     # this is only used by the megamixer to determine
     # file paths
-    mof_run: "y3v02-mof-001"
+    mof_run: "y3v02a-mof-001"
 
     # set the weight to zero for outlier pixels
     # this happens before we replace bad pixels
