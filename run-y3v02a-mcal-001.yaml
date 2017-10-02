@@ -7,8 +7,6 @@ global_seed: 11752
 jobs:
     # bnl chunksize
     chunksize: 300
-    # slac chunksize
-    #chunksize: 2000
 
     # what to do
     bands: [r,i,z]
