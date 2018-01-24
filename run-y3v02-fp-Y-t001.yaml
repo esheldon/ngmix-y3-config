@@ -1,0 +1,150 @@
+run: "y3v02-fp-Y-t001"
+
+global_seed: 29808
+
+
+# job setup
+jobs:
+    # for MOF this refers to the number of FOFs in a chunk,
+    # otherwise it is the number of objects
+    # could use 10000 or higher probably, but using less so
+    # this test will be fast
+    chunksize: 1000
+
+    # what bands to do
+    bands: [Y]
+
+collate:
+    # how to combine results
+    concat_type: 'concat-des'
+    blinding: "y3"
+
+
+# for now do regular fitting
+fitter_type: "galsim-forcephot"
+
+forced_photometry:
+    # use cm_pars etc from models file
+    model: 'cm'
+    min_T: 0.001
+
+    # used by megamixer to use a ngmix catalog
+    # for the forced photometry
+    models_run: "y3v02-cm-001"
+
+
+imageio:
+    io_type: "meds-des-y3"
+    # "flux" or "surface_brightness"
+    image_type: "flux"
+
+fit_me_galaxy: True
+fit_coadd_galaxy: False
+
+read_wcs: False
+read_me_wcs: False
+
+# turning off for ngmix only, since it currently
+# requires all stamps same size
+
+propagate_star_flags:
+    # propagate SATURATE, INTERP between
+    # bands and epochs
+    propagate: True
+
+    # don't propagate if these bits are also set for
+    # the same pixel
+    ignore_when_set: [
+        SUSPECT,
+        SSXTALK,
+        EDGEBLEED,
+        CRAY,
+        BADAMP,
+        BPM,
+    ]
+
+
+# throw out postage stamps for which the seg map of the
+# central object intersects a bright star mask
+flag_y1_stellarhalo_masked: False
+
+# if > 0, will add in estimate for intrinsic profile variance 
+intr_prof_var_fac: 0.0
+
+# note this should not be set explicitly to false for mof runs
+guess_from_nbrs: False
+
+# do *not* do this in the main code, but in the neighbor
+# code
+reject_outliers: True
+
+# the input images have zero weight when lots of bits are set
+# Setting these will zero out more
+extra_mask_flag_list: [
+    TAPEBUMP,
+    NEAREDGE,
+    SATURATE,
+    INTERP,
+    #SUSPECT,
+]
+
+
+# don't bother with any images that have bad pixels or zero weight
+# pixels
+max_zero_weight_frac: 0.45
+
+# don't need this since we are rejecting anything witha bad pixel
+replace_bad_pixels: False
+
+# don't need this since we are rejecting anything with zero weight
+symmetrize_weight: False
+
+# skip when either all weight or all image are zero
+ignore_zero_weights_images: True
+
+
+# skip if central region is masked
+# this is a 4 pixel offset in each direction
+# no need since we toss images with bad pixels
+#central_bmask_radius: 4
+
+#max_box_size: 48
+
+# subtracting neighbors, so use regular weight
+region: "cweight-nearest"
+
+image_flags2check: 655343
+
+use_psf_rerun: False
+
+# let's normalize the psf, not sure if we should
+normalize_psf: True
+
+# center the psf so as not to shift the final model
+center_psf: True
+
+print_params: True
+
+# we still fit the psfs just to keep some stats
+psf_pars:
+    model: "gauss"
+    ntry: 5
+    fit_pars:
+        maxfev: 2000
+
+# checkpoint times in minutes, needed for condor in case we pass a batch system
+# limit such as in the condor scavenge.
+# 0 means after the first object
+
+# checkpoints for lsf
+checkpoints: [0,5,10,15,20,25,
+              30,60,
+              90,120, 
+              150,180,
+              210,240,
+              270,300,
+              330,360,
+              390,420,
+              480,540,
+              600,700,
+              800,900,1000,1200,1400,1600,1800,2000]
