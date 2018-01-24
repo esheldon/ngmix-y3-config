@@ -16,7 +16,7 @@ jobs:
 
 collate:
     # how to combine results
-    concat_type: 'concat-des'
+    concat_type: 'concat-forcephot'
     blinding: "y3"
 
 
