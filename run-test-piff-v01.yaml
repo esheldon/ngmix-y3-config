@@ -138,6 +138,8 @@ psf_pars:
     ntry: 5
     fit_pars:
         maxfev: 2000
+        xtol: 5.0e-5
+        ftol: 5.0e-5
 
 round_pars:
     fitter_type: 'max'
