@@ -135,7 +135,7 @@ max_pars:
 
 psf_pars:
     model: "gauss"
-    ntry: 5
+    ntry: 2
     fit_pars:
         maxfev: 2000
         xtol: 5.0e-5
