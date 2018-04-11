@@ -27,6 +27,7 @@ imageio:
     psfs:
         type: "piff"
         piff_run: "y3a1-v23"
+        blacklist: "$PIFF_MAP_DIR/blacklists/piff-blacklist-testbed-y3a1-v23-v3.fits"
 
 
 fit_me_galaxy: True
