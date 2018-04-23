@@ -1,0 +1,7 @@
+medsconf: y3v03-psc
+
+bands: [g,r,i,z]
+
+tile_ids: [
+    DES0206-0333,
+]
