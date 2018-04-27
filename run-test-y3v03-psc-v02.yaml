@@ -1,4 +1,4 @@
-run: "test-y3v03-psc-v01"
+run: "test-y3v03-psc-v02"
 
 global_seed: 9341
 
@@ -74,8 +74,7 @@ max_pars:
         ftol: 5.0e-5
 
 psf_pars:
-    model: "coellip3"
-    #model: "gauss"
+    model: "gauss"
     ntry: 2
     fit_pars:
         maxfev: 2000
