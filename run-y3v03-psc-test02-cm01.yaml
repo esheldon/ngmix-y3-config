@@ -1,12 +1,12 @@
-run: "test-y3v03-psc-mof-v01"
+run: "y3v03-psc-test02-cm01"
 
-global_seed: 4301
+global_seed: 812328
 
 
 # job setup
 jobs:
-    # bnl chunksize
-    chunksize: 250
+    #chunksize: 10000
+    chunksize: 1000
 
     # what to do
     bands: [g,r,i,z]
@@ -33,28 +33,6 @@ use_coadd_prefix: False
 read_wcs: False
 read_me_wcs: False
 
-# setup for neighbors
-nbrs:
-    buff_type: 'tot'
-    buff_frac: 0.25
-    maxsize_to_replace: 256
-    new_maxsize: 384
-    check_seg: True
-
-# mof stuff
-model_nbrs: True
-model_nbrs_method: 'subtract'
-mof:
-    maxabs_conv:  [1.0e-3,1.0e-3,1.0e-6,1.0e-6,1.0e-6,1.0e-6,1.0e-6,1.0e-6,1.0e-6]
-    maxfrac_conv: [1.0e-6,1.0e-6,1.0e-6,1.0e-6,1.0e-6,1.0e-3,1.0e-3,1.0e-3,1.0e-3]
-    maxerr_conv: 0.5 
-    max_itr: 15
-    min_itr: 10
-    min_useg_itr: 1
-    write_convergence_data: False
-    convergence_model: 'cm'
-
-
 
 # throw out postage stamps for which the seg map of the
 # central object intersects a bright star mask
@@ -77,7 +55,7 @@ symmetrize_weight: False
 ignore_zero_weights_images: True
 
 # using uberseg even though we subtracted neighbors
-region: "mof"
+region: "uberseg"
 
 normalize_psf: True
 
@@ -90,23 +68,23 @@ max_pars:
     method: 'lm'
     ntry: 2
     
-    use_fracdev_grid: False
-    fracdev_range: [0.0,1.0]
-    TdByTe_range: [0.0,1.0e+12]
- 
     lm_pars:
         maxfev: 2000
         xtol: 5.0e-5
         ftol: 5.0e-5
 
+    use_fracdev_grid: False
+    fracdev_range: [0.0,1.0]
+    TdByTe_range: [0.0,1.0e+12]
+
+
 psf_pars:
-    model: "coellip3"
-    #model: "gauss"
-    ntry: 2
+    model: "em3"
+    ntry: 20
     fit_pars:
-        maxfev: 2000
-        xtol: 5.0e-5
-        ftol: 5.0e-5
+      maxiter: 5000
+      tol: 5.0e-6
+
 
 round_pars:
     fitter_type: 'max'
@@ -115,6 +93,8 @@ replace_cov: False
 cov_pars:
     m: 5
     h: 1.0e-3
+
+use_logpars: False
 
 model_pars:
     cm:
@@ -134,7 +114,7 @@ model_pars:
             type: "dgauss"
             width: 0.27
 
-        # for now use stuff from great-des
+        # from fits on great-des
         fracdev:
             weights: [ 0.07219169,  0.03931063,  0.06144639,  0.02342249,  0.05680965,
                        0.07317471,  0.07112629,  0.05102051,  0.03397887,  0.06657475,
