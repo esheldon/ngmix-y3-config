@@ -1,0 +1,140 @@
+# forgot to do noise image in this one, do not use!
+run: "y3v03-psc-test02-mcal-nocorr-v01"
+
+global_seed: 8314
+
+
+# job setup
+jobs:
+    # at bnl about 0.7 sec per object for riz, but usually like to double
+    # that due to variance we see in the machines, so say 1.4.  So if we aim for
+    # a 1 hour job and assume 2 sec per object, we want 2600
+    chunksize: 2600
+
+    # what to do
+    bands: [r,i,z]
+
+collate:
+    # how to combine results
+    concat_type: 'concat-des'
+    blinding:
+        type: "y3"
+
+fitter_type: "metacal-ngmix-boot"
+
+imageio:
+    io_type: "meds-des-y3"
+    image_type: "flux"
+
+    psfs:
+        type: "infile"
+
+
+fit_me_galaxy: False
+fit_coadd_galaxy: True
+use_coadd_prefix: False
+
+read_wcs: False
+read_me_wcs: False
+
+
+# throw out postage stamps for which the seg map of the
+# central object intersects a bright star mask
+flag_y1_stellarhalo_masked: False
+
+# if > 0, will add in estimate for intrinsic profile variance 
+intr_prof_var_fac: 0.0
+
+# note this should not be set explicitly to false for mof runs
+guess_from_nbrs: False
+
+#
+# all this done in coadding code
+#
+reject_outliers: False
+extra_mask_flag_list: []
+max_zero_weight_frac: 0.10
+replace_bad_pixels: False
+symmetrize_weight: False
+ignore_zero_weights_images: True
+
+# using uberseg even though we subtracted neighbors
+region: "uberseg"
+
+normalize_psf: True
+
+# using psf images already in file
+center_psf: False
+
+print_params: True
+
+max_pars:
+    method: 'lm'
+    ntry: 2
+    
+    lm_pars:
+        maxfev: 2000
+        xtol: 5.0e-5
+        ftol: 5.0e-5
+
+psf_pars:
+    model: "gauss"
+    ntry: 2
+    fit_pars:
+        maxfev: 2000
+        xtol: 5.0e-5
+        ftol: 5.0e-5
+
+round_pars:
+    fitter_type: 'max'
+
+replace_cov: False
+cov_pars:
+    m: 5
+    h: 1.0e-3
+
+use_logpars: False
+
+model_pars:
+    gauss:
+        g:
+            type: "ba"
+            sigma: 0.3
+
+        T:
+            type: "TwoSidedErf"
+            pars: [-10.0, 0.03, 1.0e+06, 1.0e+05]
+
+        counts:
+            type: "TwoSidedErf"
+            pars: [-1.0e+04, 1.0, 1.0e+09, 0.25e+08]
+            repeat: True
+
+        cen:
+            type: "dgauss"
+            width: 0.27
+
+metacal_pars:
+    # this is in the MEDS files
+    use_noise_image: True
+    psf: "gauss"
+    types: ['noshear','1p','1m','2p','2m']
+
+
+
+# checkpoint times in minutes, needed for condor in case we pass a batch system
+# limit such as in the condor scavenge.
+# 0 means after the first object
+
+# checkpoints for lsf
+checkpoints: [0,5,10,15,20,25,
+              30,60,
+              90,120, 
+              150,180,
+              210,240,
+              270,300,
+              330,360,
+              390,420,
+              480,540,
+              600,700,
+              800,900,1000,1200,1400,1600,1800,2000]
