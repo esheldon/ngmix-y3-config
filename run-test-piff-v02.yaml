@@ -65,6 +65,8 @@ correct_meds:
     # so we put the numbers here
     bad_flags: [
         1,     # BPM
+        2,     # SATURATE
+        4,     # INTERP
         8,     # BADAMP
         16,    # CRAY
         32,    # STAR
@@ -72,13 +74,10 @@ correct_meds:
         128,   # EDGEBLEED
         512,   # EDGE
         1024,  # STREAK
+        2048,  # SUSPECT for y3 this includes TAPEBUMP
         4096,  # FIXED
-
-        2,     # SATURATE
-        4,     # INTERP
-        2048,  # SUSPECT
-        8192,  # NEAREDGE
-        16384, # TAPEBUMP
+        #8192,  # NEAREDGE not included for y3
+        #16384, # TAPEBUMP
     ]
 
 
@@ -120,7 +119,7 @@ max_zero_weight_frac: 0.10
 replace_bad_pixels: False
 
 # doing this stuff in the corrector
-symmetrize_weight: Fals
+symmetrize_weight: False
 
 # skip when either all weight or all image are zero
 ignore_zero_weights_images: True
