@@ -1,6 +1,4 @@
-# symmetrizing when replacing pixels in the
-# extractor corrector
-# not extra flags though
+# this version no cut on psf model s/n
 run: "test-piff-v05"
 
 global_seed: 19510
