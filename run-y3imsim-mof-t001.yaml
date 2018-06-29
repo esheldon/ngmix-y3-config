@@ -1,4 +1,4 @@
-run: "y3v02-mof-t001"
+run: "y3imsim-mof-t001"
 
 global_seed: 8315
 
@@ -25,8 +25,9 @@ imageio:
         type: "infile"
 
 
-fit_me_galaxy: True
-fit_coadd_galaxy: False
+fit_me_galaxy: False
+fit_coadd_galaxy: True
+use_coadd_prefix: False
 
 read_wcs: False
 read_me_wcs: False
