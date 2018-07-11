@@ -14,6 +14,7 @@ jobs:
 collate:
     # how to combine results
     concat_type: 'concat-des'
+    blinding: null
 
 
 fitter_type: "max-ngmix-boot"
